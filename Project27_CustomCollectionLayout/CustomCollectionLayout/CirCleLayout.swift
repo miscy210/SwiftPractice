@@ -48,7 +48,7 @@ class CirCleLayout: UICollectionViewFlowLayout {
         
         let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
         attributes.size = CGSize(width: 60, height: 60)
-        let angle = 2 * CGFloat(M_PI) * CGFloat(indexPath.row) / CGFloat(totalNum)
+        let angle = 2 * CGFloat(Double.pi) * CGFloat(indexPath.row) / CGFloat(totalNum)
         attributes.center = CGPoint(x: center.x + radius*cos(angle), y: center.y + radius*sin(angle))
         return attributes
     }

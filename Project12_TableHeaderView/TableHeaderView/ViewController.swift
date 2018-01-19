@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     let datas = ["下","拉","可","以","出","现","很","神","奇","的","事","情","yo","yo","yo","yo","yo","yo"]
     let tableView = UITableView(frame: YHRect, style: .plain)
-    let resueIdentifer = "CustomCell"
+    let reuseIdentifier = "CustomCell"
     let headView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: YHWidth, height: HeadViewHeight))
     
     override func viewDidLoad() {
@@ -54,7 +54,7 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: resueIdentifer)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.showsVerticalScrollIndicator = false
         //下面两句必不可少，否则会出现第一次加载时位置不对的情况
         tableView.contentInset.top = HeadViewHeight
@@ -75,7 +75,7 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
         return datas.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: resueIdentifer, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         cell.textLabel?.text = datas[indexPath.row]
         cell.textLabel?.textAlignment = .center
         return cell

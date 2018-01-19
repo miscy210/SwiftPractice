@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     
     let tableView = UITableView(frame: YHNoNavRect, style: .plain)
-    let reuseIdentifer = String(describing: UITableViewCell.self)
+    let reuseIdentifier = String(describing: UITableViewCell.self)
     let datas = ["瀑布流","圆形","线性"]
     
 
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         view.addSubview(tableView)
     }
     
@@ -61,9 +61,9 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         cell.textLabel?.text = datas[indexPath.row]
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 20, weight: 5)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight(rawValue: 5))
         cell.textLabel?.textColor = .orange
         cell.textLabel?.textAlignment = .center
         return cell

@@ -12,7 +12,7 @@ class DrawRectView: UIView {
     
     var tap: UITapGestureRecognizer?
     
-    func removeSelf() {
+    @objc func removeSelf() {
         self.removeFromSuperview()
     }
 
@@ -43,7 +43,7 @@ class DrawRectView: UIView {
     
     //圆弧
     private func pathARC() {
-        let path = UIBezierPath(arcCenter: CGPoint(x: 20, y: 150), radius: 100, startAngle: 0, endAngle: CGFloat(M_PI*90/180), clockwise: true)
+        let path = UIBezierPath(arcCenter: CGPoint(x: 20, y: 150), radius: 100, startAngle: 0, endAngle: CGFloat(Double.pi*90/180), clockwise: true)
         //连接样式
         path.lineCapStyle = .round
         //连接方式

@@ -48,10 +48,10 @@ class ViewController: UIViewController {
         pickerView.selectRow(0, inComponent: 0, animated: true)
         showLabel.textColor = .orange
         showLabel.textAlignment = .center
-        showLabel.font = UIFont.systemFont(ofSize: 30, weight: 5)
+        showLabel.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight(rawValue: 5))
         btn.setTitle("随机选择", for: .normal)
         btn.setTitleColor(.orange, for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 30, weight: 5)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight(rawValue: 5))
         btn.addTarget(self, action: #selector(randomTime), for: .touchUpInside)
         
         view.addSubview(pickerView)
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         showLabel.text = "\(pickerView.selectedRow(inComponent: 0))时 \(pickerView.selectedRow(inComponent: 1))分 \(pickerView.selectedRow(inComponent: 2))秒"
     }
     
-    func randomTime() {
+    @objc func randomTime() {
         pickerView.selectRow(Int(arc4random())%hours.count, inComponent: 0, animated: true)
         pickerView.selectRow(Int(arc4random())%mins.count, inComponent: 1, animated: true)
         pickerView.selectRow(Int(arc4random())%secs.count, inComponent: 2, animated: true)
@@ -119,7 +119,7 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         }
         
         pickerLabel.textColor = .green
-        pickerLabel.font = UIFont.systemFont(ofSize: 18, weight: 5)
+        pickerLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight(rawValue: 5))
         pickerLabel.textAlignment = .center
         
         return pickerLabel

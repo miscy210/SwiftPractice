@@ -11,7 +11,7 @@ import UIKit
 class ShowVC: UIViewController {
     
     
-    let textView = UITextView(frame: YHRect)
+    let textView = UITextView(frame: CGRect(x: 0, y: 64, width: YHWidth, height: YHHeight-64))
     var province: Province!
     
 
@@ -34,7 +34,7 @@ class ShowVC: UIViewController {
         }
         
         textView.text = str
-        textView.font = UIFont.systemFont(ofSize: 20, weight: 5)
+        textView.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight(rawValue: 5))
         textView.textColor = .orange
         textView.isEditable = false
         view.addSubview(textView)

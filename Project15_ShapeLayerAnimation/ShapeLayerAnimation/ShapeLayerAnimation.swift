@@ -40,7 +40,7 @@ class ShapeLayerAnimation: UIViewController ,CAAnimationDelegate {
         view.layer.addSublayer(shapeLayer)
         
         //贝塞尔曲线
-        let path = UIBezierPath(arcCenter: CGPoint(x: centerX, y: centerY), radius: 80, startAngle: 0, endAngle: CGFloat(M_PI*2), clockwise: false)
+        let path = UIBezierPath(arcCenter: CGPoint(x: centerX, y: centerY), radius: 80, startAngle: 0, endAngle: CGFloat(Double.pi*2), clockwise: false)
         //关联layer和贝塞尔曲线
         shapeLayer.path = path.cgPath
         //创建动画，strokeEnd属性
@@ -66,11 +66,11 @@ class ShapeLayerAnimation: UIViewController ,CAAnimationDelegate {
             view.layer.addSublayer(line)
             
             let path2 = UIBezierPath()
-            let x = centerX+100*cos(2.0*Double(i)*M_PI/Double(count))
-            let y = centerY-100*sin(2.0*Double(i)*M_PI/Double(count))
+            let x = centerX+100*cos(2.0*Double(i)*Double.pi/Double(count))
+            let y = centerY-100*sin(2.0*Double(i)*Double.pi/Double(count))
             let len = 50
             path2.move(to: CGPoint(x: x, y: y))
-            path2.addLine(to: CGPoint(x: x+Double(len)*cos(2*M_PI/Double(count)*Double(i)), y: y-Double(len)*sin(2*M_PI/Double(count)*Double(i))))
+            path2.addLine(to: CGPoint(x: x+Double(len)*cos(2*Double.pi/Double(count)*Double(i)), y: y-Double(len)*sin(2*Double.pi/Double(count)*Double(i))))
             line.path = path2.cgPath
             line.add(animation, forKey: nil)
         }

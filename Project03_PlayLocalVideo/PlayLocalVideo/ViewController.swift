@@ -19,7 +19,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let tableView = UITableView(frame: YHScreenRect, style: .plain)
     var playViewController: AVPlayerViewController?
     var playView: AVPlayer?
-    let reuseIdentifer = "VideoCell"
+    let reuseIdentifier = "VideoCell"
     let datas = [
         VideoModel(image: "videoScreenshot01", title: "Introduce 3DS Mario", source: "Youtube - 06:32"),
         VideoModel(image: "videoScreenshot02", title: "Emoji Among Us", source: "Vimeo - 3:34"),
@@ -46,7 +46,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func setupView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(VideoCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(VideoCell.self, forCellReuseIdentifier: reuseIdentifier)
         view.addSubview(tableView)
     }
     
@@ -98,7 +98,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             as:向上转换成超类
          当不确定是否可以转成功时，用as?，确定时，用as!
         */
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! VideoCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! VideoCell
         cell.setModel(model: datas[indexPath.row])
         return cell
     }

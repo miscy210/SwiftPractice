@@ -129,12 +129,12 @@ dispatch_time_t
         if let url = URL(string: imageURL) {
             URLSession.shared.downloadTask(with: url, completionHandler: { (location, response, error) in
                 /*location:下载好的文件位置(该文件临时缓存，需要移动出来)  response:回复  error:错误*/
-                print("默认下载完毕，位置：\(location?.path)。线程:\(Thread.current)")
+                print("默认下载完毕，位置：\(String(describing: location?.path))。线程:\(Thread.current)")
                 DispatchQueue.main.async {
                     do {
                         self.images[1].image = try UIImage(data: Data(contentsOf: location!))
                     }catch let err as NSError {
-                        print("打开文件失败:\(err.localizedFailureReason)")
+                        print("打开文件失败:\(String(describing: err.localizedFailureReason))")
                     }
                 }
             }).resume()
@@ -156,12 +156,12 @@ dispatch_time_t
             let configuration = URLSessionConfiguration.default
             let session = URLSession(configuration: configuration)//download字符串作用：当前任务的标识，保证下载任务在后台运行
             session.downloadTask(with: url, completionHandler: { (location, response, error) in
-                print("自定义下载完毕，位置：\(location?.path)。\(Thread.current)")
+                print("自定义下载完毕，位置：\(String(describing: location?.path))。\(Thread.current)")
                 DispatchQueue.main.async {
                     do {
                         self.images[2].image = try UIImage(data: Data(contentsOf: location!))
                     }catch let err as NSError {
-                        print("打开文件失败:\(err.localizedFailureReason)")
+                        print("打开文件失败:\(String(describing: err.localizedFailureReason))")
                     }
                 }
             }).resume()
@@ -191,7 +191,7 @@ dispatch_time_t
             do {
                 self.images[3].image = try UIImage(data: Data(contentsOf: location))
             }catch let err as NSError {
-                print("打开文件失败:\(err.localizedFailureReason)")
+                print("打开文件失败:\(String(describing: err.localizedFailureReason))")
             }
         }
     }

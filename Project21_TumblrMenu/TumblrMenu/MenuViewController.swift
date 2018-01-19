@@ -51,7 +51,7 @@ class MenuViewController: UIViewController {
         }
     }
     
-    func dismissView() {
+    @objc func dismissView() {
         dismiss(animated: true, completion: nil)
     }
 

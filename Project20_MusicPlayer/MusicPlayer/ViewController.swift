@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     let musicPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first?.appending("/music")
     var musicList = [String]()
     let tableView = UITableView(frame: YHRect)
-    let resueIndetifier = "MusicCell"
+    let reuseIdentifier = "MusicCell"
     var musicPlayer: AVAudioPlayer?
     
     override func viewDidLoad() {
@@ -57,12 +57,12 @@ class ViewController: UIViewController {
          try!:相当于可选类型！，如果不throw就不会出任何问题，一旦throw，程序就会crash
          try?:把throw转换成是否是nil，而不处理具体的结果。如①if let result = try? func() {} else {} ②guard let result = try? func() else {}
          */
-        print(musicPath)
+        print(musicPath as Any)
         do {
             try fileManager.createDirectory(atPath: musicPath!, withIntermediateDirectories: true, attributes: nil)
             print("创建成功")
         } catch let err as NSError {
-            print("创建失败:\(err.localizedFailureReason)")
+            print("创建失败:\(String(describing: err.localizedFailureReason))")
             return
         }
         //把歌曲保存到caches里面
@@ -77,7 +77,7 @@ class ViewController: UIViewController {
                 try fileManager.copyItem(atPath: bundlePath!, toPath: toPath)
                 print("移动成功")
             } catch let err as NSError {
-                print("移动失败:\(err.localizedFailureReason)")
+                print("移动失败:\(String(describing: err.localizedFailureReason))")
             }
         }
     }
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
             musicList = try fileManager.contentsOfDirectory(atPath: musicPath!)
             print("查询成功:\(musicList)")
         } catch let err as NSError {
-            print("查询失败:\(err.localizedFailureReason)")
+            print("查询失败:\(String(describing: err.localizedFailureReason))")
         }
     }
     
@@ -114,7 +114,7 @@ class ViewController: UIViewController {
             musicPlayer?.play()
             
         } catch let err as NSError {
-            print("播放失败：\(err.localizedFailureReason)")
+            print("播放失败：\(String(describing: err.localizedFailureReason))")
         }
         
     }
@@ -130,11 +130,11 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate ,AVAudioPlay
         return musicList.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: resueIndetifier) ?? UITableViewCell(style: .default, reuseIdentifier: resueIndetifier)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
         cell.textLabel?.text = musicList[indexPath.row]
         cell.textLabel?.textAlignment = .center
         cell.textLabel?.textColor = .orange
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 30, weight: 10)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight(rawValue: 10))
         return cell
     }
     

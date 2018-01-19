@@ -139,7 +139,7 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate, UISearchBar
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let show = ShowVC()
-        show.province = datas[indexPath.row]
+        show.province = ( searchResultTC.datas.count == 0 ) ? datas[indexPath.row] : searchResultTC.datas[indexPath.row]
         self.navigationController?.pushViewController(show, animated: true)
     }
     

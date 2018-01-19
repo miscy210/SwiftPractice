@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         btn.addTarget(self, action: #selector(changeStatus(_:)), for: .touchUpInside)
     }
 
-    func changeStatus(_ sender: UIButton) {
+    @objc func changeStatus(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         sender.isSelected ? wave.startWave() : wave.stopWaver()
     }

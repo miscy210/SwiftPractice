@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     var datas = [CellModel]()
     let tableView = UITableView(frame: YHRect, style: .plain)
-    let reuseIdentifer = String(describing: CustomCell.self)
+    let reuseIdentifier = String(describing: CustomCell.self)
     
 
     override func viewDidLoad() {
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-        tableView.register(CustomCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(CustomCell.self, forCellReuseIdentifier: reuseIdentifier)
         view.addSubview(tableView)
     }
 }
@@ -60,7 +60,7 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
         return datas.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! CustomCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! CustomCell
         cell.buildInterface(model: datas[indexPath.row])
         return cell
     }

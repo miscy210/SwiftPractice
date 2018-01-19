@@ -104,7 +104,7 @@ class AnimationViewController: UIViewController {
         
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
             //这是基于现在的基础进行变化
-            self.imageView.transform = self.imageView.transform.rotated(by: CGFloat(M_PI))
+            self.imageView.transform = self.imageView.transform.rotated(by: CGFloat(Double.pi))
             }) { [weak self](_) in//由于这里会造成循环引用，导致VC得不到释放的问题，所以，需要在block使self成为弱引用
                 if let strongSelf = self {
                     strongSelf.rotationAnimation()

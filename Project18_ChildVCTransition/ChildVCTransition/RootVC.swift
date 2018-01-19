@@ -40,7 +40,7 @@ class RootVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(jump), name: NSNotification.Name(rawValue: JumpNotification), object: nil)
     }
     
-    func jump() {
+    @objc func jump() {
         //options:跳转的方式
         transition(from: currentChildNumber==0 ? childViewControllers.first! : childViewControllers.last!,
                    to: currentChildNumber==0 ? childViewControllers.last! : childViewControllers.first!,

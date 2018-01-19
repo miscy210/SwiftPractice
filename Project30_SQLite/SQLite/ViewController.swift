@@ -51,14 +51,14 @@ class ViewController: UIViewController {
     }
     
     
-    func addUser() {
+    @objc func addUser() {
         
         let alert = UIAlertController(title: "添加用户", message: "输入用户，密码！", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let delete = UIAlertAction(title: "确定", style: .destructive, handler: { (action) in
             let name = alert.textFields?[0].text
             let password = alert.textFields?[1].text
-            if (name?.characters.count)! < 1 || (password?.characters.count)! < 1 {
+            if (name?.count)! < 1 || (password?.count)! < 1 {
                 return
             }
             let dic = ["name":name, "password":password]
@@ -98,7 +98,7 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
         let dic = dbs![indexPath.row]
         cell.textLabel?.text = "用户名：" + dic["name"]!
         cell.detailTextLabel?.text = "密码：" + dic["password"]!
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 30, weight: 5)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight(rawValue: 5))
         cell.textLabel?.textColor = .orange
         return cell
     }

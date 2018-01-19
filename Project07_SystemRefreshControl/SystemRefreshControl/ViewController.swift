@@ -43,14 +43,14 @@ class ViewController: UIViewController {
         
         tableView.refreshControl = refreshControl
         refreshControl.backgroundColor = .gray
-        refreshControl.attributedTitle = NSAttributedString(string: "最后一次更新：\(NSDate())",attributes: [NSForegroundColorAttributeName: UIColor.white])//文字的颜色
+        refreshControl.attributedTitle = NSAttributedString(string: "最后一次更新：\(NSDate())",attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])//文字的颜色
         refreshControl.tintColor = .orange//菊花的颜色
         refreshControl.addTarget(self, action: #selector(addContent), for: .valueChanged)
         
         view.addSubview(tableView)
     }
     
-    func addContent() {
+    @objc func addContent() {
         contents.append(contentsOf: news)
         tableView.reloadData()
         refreshControl.endRefreshing()
@@ -72,7 +72,7 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
         cell.textLabel?.text = String(indexPath.row+1) + ":" + contents[indexPath.row]
         cell.textLabel?.textColor = .black
         cell.textLabel?.backgroundColor = .clear
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 30, weight: 10)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight(rawValue: 10))
         return cell
     }
     

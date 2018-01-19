@@ -28,7 +28,7 @@ class YHDBManager {
             do {
                 try FileManager.default.createDirectory(atPath: dbDirPath!, withIntermediateDirectories: true, attributes: nil)
             } catch let err as NSError {
-                print("创建\(dbDirPath)失败：\(err.localizedFailureReason)")
+                print("创建\(String(describing: dbDirPath))失败：\(String(describing: err.localizedFailureReason))")
                 return nil
             }
         }
@@ -47,7 +47,7 @@ class YHDBManager {
                 try FileManager.default.removeItem(atPath: dbPath)
                 print("移除\(fileName)成功！")
             } catch let err as NSError {
-                print("移除\(fileName)失败：\(err.localizedFailureReason)")
+                print("移除\(fileName)失败 \(String(describing: err.localizedFailureReason))")
             }
         }else {
             print("无该文件\(fileName)！移除什么？")
@@ -68,7 +68,7 @@ class YHDBManager {
                     tableNames.append((set?.string(forColumn: "name"))!)
                 }
             } catch let err as NSError {
-                print("读取列表失败：\(err.localizedFailureReason)")
+                print("读取列表失败：\(String(describing: err.localizedFailureReason))")
             }
         }else {
             print("打开数据库失败！")
@@ -94,7 +94,7 @@ class YHDBManager {
                     try db?.executeUpdate("DROP TABLE IF EXISTS \(name)", values: nil)
                     print("删除表\(name)成功！")
                 }catch let err as NSError {
-                    print("删除表\(name)失败:\(err.localizedFailureReason)")
+                    print("删除表\(name)失败:\(String(describing: err.localizedFailureReason))")
                     roolback?.pointee = true
                     /*事务回滚
                      oc: roolback = yes
@@ -111,7 +111,7 @@ class YHDBManager {
     /**创建表*/
     static func createTable(tableName: String, parameter: String, fileName: String = defaultName) {
         
-        if tableName.characters.count < 1 {
+        if tableName.count < 1 {
             return
         }
         let dbPath = (dbDirPath?.appending("/\(fileName).db"))!
@@ -121,7 +121,7 @@ class YHDBManager {
                 try db?.executeUpdate("CREATE TABLE IF NOT EXISTS \(tableName) (\(parameter))", values: nil)
                 print("创建表\(tableName)成功！")
             }catch let err as NSError {
-                print("创建表\(tableName)失败：\(err.localizedFailureReason)")
+                print("创建表\(tableName)失败：\(String(describing: err.localizedFailureReason))")
                 return
             }
         })
@@ -132,7 +132,7 @@ class YHDBManager {
     /**获得指定表的字段名-------------采用FMDBQueue---inDatabase的方式，查询数据最好使用该方式*/
     static func getTableFields(tableName: String, fileName: String = defaultName) -> [String]? {
         
-        if tableName.characters.count < 1 {
+        if tableName.count < 1 {
             return nil
         }
         let dbPath = (dbDirPath?.appending("/\(fileName).db"))!
@@ -145,7 +145,7 @@ class YHDBManager {
                     tables.append((set?.string(forColumn: "name"))!)
                 }
             }catch let err as NSError {
-                print("查询\(tableName)字段名失败：\(err.localizedFailureReason)")
+                print("查询\(tableName)字段名失败：\(String(describing: err.localizedFailureReason))")
             }
         })
         print("所有字段名:\(tables)")
@@ -155,7 +155,7 @@ class YHDBManager {
     /**增*/
     static func saveData(tableName: String, key_value_dic: Dictionary<String, String>, fileName: String = defaultName) {
         
-        if tableName.characters.count < 1 {
+        if tableName.count < 1 {
             return
         }
         
@@ -171,7 +171,7 @@ class YHDBManager {
     /**删*/
     static func deleteData(tableName: String, condition: String, fileName: String = defaultName) {
         
-        if tableName.characters.count < 1 {
+        if tableName.count < 1 {
             return
         }
         let dbPath = (dbDirPath?.appending("/\(fileName).db"))!
@@ -186,7 +186,7 @@ class YHDBManager {
     /**改*/
     static func changeData(tableName: String, key_value_dic: Dictionary<String, String>, fileName: String = defaultName) {
         
-        if tableName.characters.count < 1 {
+        if tableName.count < 1 {
             return
         }
         let dbPath = (dbDirPath?.appending("/\(fileName).db"))!
@@ -201,7 +201,7 @@ class YHDBManager {
     /**查*/
     static func getData(tableName: String, condition: String?, fileName: String = defaultName) -> [Dictionary<String, String>]? {
         
-        if tableName.characters.count < 1 {
+        if tableName.count < 1 {
             return nil
         }
         var result = [Dictionary<String, String>]()

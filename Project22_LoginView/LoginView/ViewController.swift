@@ -46,7 +46,7 @@ class ViewController: UIViewController {
     }
     
     
-    func keyboardWillShow(note: Notification) {
+    @objc func keyboardWillShow(note: Notification) {
         let keyboardHeight = (note.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
         Log("键盘高度：\(keyboardHeight)")
         if keyboardHeight/2 == -view.frame.origin.y {
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
     }
     
     
-    func keyboardWillHiden(note: Notification) {
+    @objc func keyboardWillHiden(note: Notification) {
         if view.frame.origin.x == 0 {
             Log("无需再次复位！")
         }

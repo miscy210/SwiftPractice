@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         view.layer.addSublayer(gradientLayer)
     }
-    func randomColor() {
+    @objc func randomColor() {
         view.backgroundColor = UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)
     }
 

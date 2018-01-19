@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         view.addSubview(btn2)
     }
     
-    func showView(_ sender: UIButton) {
+    @objc func showView(_ sender: UIButton) {
         if sender.currentTitle == "DrawRect" {
             print("采用drawrect画图")
             view.addSubview(drawView)

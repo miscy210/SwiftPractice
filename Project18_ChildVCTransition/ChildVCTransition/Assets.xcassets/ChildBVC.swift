@@ -22,7 +22,7 @@ class ChildBVC: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    func jump() {
+    @objc func jump() {
         //发送跳转通知
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: JumpNotification), object: nil)
     }

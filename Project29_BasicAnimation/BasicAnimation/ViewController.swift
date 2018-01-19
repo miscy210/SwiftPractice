@@ -21,7 +21,7 @@ class ViewController: UIViewController {
 
     let datas = ["位置","透明度","缩放","颜色","旋转"]
     let tableView = UITableView(frame: YHRect, style: .plain)
-    let reuseIdentifer = String(describing: UITableViewCell.self)
+    let reuseIdentifier = String(describing: UITableViewCell.self)
     
     
     override func viewDidLoad() {
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         view.addSubview(tableView)
     }
 }
@@ -59,9 +59,9 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         cell.textLabel?.text = datas[indexPath.row]
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 30, weight: 5)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight(rawValue: 5))
         cell.textLabel?.textColor = .orange
         return cell
     }

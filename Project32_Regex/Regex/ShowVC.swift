@@ -11,7 +11,7 @@ import UIKit
 class ShowVC: UIViewController {
     
     
-    let textView = UITextView(frame: YHRect)
+    let textView = UITextView(frame: CGRect(x: 0, y: 64, width: YHWidth, height: YHHeight-64))
     var province: Province!
     
 
@@ -28,13 +28,13 @@ class ShowVC: UIViewController {
     func setupView() {
         
         title = province.name
-        var str = "省会名称：\(province.name)\n拥有\(province.citys.count)个市\n"
-        for city in province.citys {
+        var str = "省会名称：\(province.name)\n拥有\(province.cities.count)个市\n"
+        for city in province.cities {
             str = "\(str)\n市名：\(city.name)\n别名：\(city.alias)\n"
         }
         
         textView.text = str
-        textView.font = UIFont.systemFont(ofSize: 20, weight: 5)
+        textView.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight(rawValue: 5))
         textView.textColor = .orange
         textView.isEditable = false
         view.addSubview(textView)

@@ -54,7 +54,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.addSubview(tableView)
         view.addSubview(button)
     }
-    func changFont() {
+    @objc func changFont() {
         fontNumber = (fontNumber+1)%fontNames.count
         tableView.reloadData()
     }

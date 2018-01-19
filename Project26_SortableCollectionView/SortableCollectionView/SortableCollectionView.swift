@@ -51,7 +51,7 @@ class SortableCollectionView: UICollectionView {
     
     
     //手势触发
-    func panHandler(sender: UILongPressGestureRecognizer) {
+    @objc func panHandler(sender: UILongPressGestureRecognizer) {
         
         //手势点在collectionView的位置
         let collectionViewPoint = sender.location(in: self)
@@ -196,7 +196,7 @@ extension SortableCollectionView {
     }
     
     
-    func autoScroll(timer: Timer) {
+    @objc func autoScroll(timer: Timer) {
         
         if let userInfo = timer.userInfo as? [String:AnyObject] {
             if let top =  userInfo["top"] as? Bool,let speed = userInfo["speed"] as? CGFloat {

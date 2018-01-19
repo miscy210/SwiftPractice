@@ -5,6 +5,7 @@
 //  Created by baiwei－mac on 16/11/30.
 //  Copyright © 2016年 YuHua. All rights reserved.
 //
+//  Modified By miscy210 for readapted to Swfit 4
 
 import UIKit
 

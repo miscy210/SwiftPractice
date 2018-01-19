@@ -48,7 +48,7 @@ class CustomCell: UICollectionViewCell {
         superview?.bringSubview(toFront: self)
     }
     
-    func backBtnTouch() {
+    @objc func backBtnTouch() {
         backBtn.isHidden = true
         backButtonTapped!()
     }

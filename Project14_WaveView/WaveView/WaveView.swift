@@ -61,7 +61,7 @@ class WaveView: UIView {
         waveDisplayLink?.add(to: .main, forMode: .commonModes)
     }
     
-    func keyFrameWave() {
+    @objc func keyFrameWave() {
         offsetX -= waveSpeed
         
         let width = frame.size.width

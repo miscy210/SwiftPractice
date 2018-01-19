@@ -6,6 +6,7 @@
 //  Copyright © 2016年 YuHua. All rights reserved.
 //
 
+
 import UIKit
 
 /*正则表达式来匹配自己需要的内容，需要提取网页内容时，非常有用*/
@@ -13,39 +14,39 @@ import UIKit
 let YHRect = UIScreen.main.bounds
 let YHHeight = YHRect.size.height
 let YHWidth = YHRect.size.width
-let YHNoNavRect = CGRect(x: 0, y: 0, width: YHWidth, height: YHHeight - 64)
+let YHNoNavRect = CGRect(x: 0, y: 0, width: YHWidth, height: YHHeight-64)
 let YHNoTarRect = CGRect(x: 0, y: 0, width: YHWidth, height: YHHeight - 49)
-let YHNoNavTarRect = CGRect(x: 0, y: 0, width: YHWidth, height: YHHeight - 49 - 64)
-
+let YHNoNavTarRect = CGRect(x: 0, y: 0, width: YHWidth, height: YHHeight-64-49)
 
 class ViewController: UIViewController {
     
-    /*本demo用于匹配维基百科上面，中国的所有省市地名*/
-    var provinces = [Province]()
+    /*本demo用于匹配维基百科上面，中国的所有省市地名*/var provinces = [Province]()
     let tableView = UITableView(frame: YHRect, style: .plain)
-    let reuseIdentifer = "ReuseIdentifer"
+    let reuseIdentifier = "ReuseIdentifier"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let result = regexProvinces() {
+        if let result  = regexProvinces(){
             provinces = result
             //将数据保存到plist文件中
             saveProvinces()
         }
         setupView()
+        // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
-
+    
     func setupView() {
         
         title = "全国省份列表"
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         view.addSubview(tableView)
     }
     
@@ -58,7 +59,7 @@ class ViewController: UIViewController {
             let reuslt = NSMutableDictionary()
             for province in provinces {
                 let pro = NSMutableDictionary()
-                for city in province.citys {
+                for city in province.cities {
                     pro.setValue(city.alias, forKey: city.name)
                 }
                 reuslt.setValue(pro, forKey: province.name)
@@ -67,11 +68,10 @@ class ViewController: UIViewController {
             reuslt.write(toFile: filePath, atomically: true)
         }
     }
+    
 }
 
-
-extension ViewController:UITableViewDataSource, UITableViewDelegate {
-    
+extension ViewController: UITableViewDataSource, UITableViewDelegate{
     //MARK: - DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -82,14 +82,12 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         let province = provinces[indexPath.row]
         cell.textLabel?.text = province.name
         cell.textLabel?.textColor = .orange
         return cell
     }
-    
-    
     //MARK: - Delegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
@@ -99,43 +97,29 @@ extension ViewController:UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let show = ShowVC()
         show.province = provinces[indexPath.row]
+        print(show.province)
         self.navigationController?.pushViewController(show, animated: true)
     }
 }
-
-
-//市区结构体，包含名字和别称
-struct City {
-    let name, alias: String
-}
-
-struct Province {
-    let name: String
-    var citys: [City]
-}
-
-
 //数据处理扩展
 extension ViewController {
-    
     //返回省数组
-    func regexProvinces() -> [Province]? {
-        
+    func regexProvinces() -> [Province]?{
         var result = [Province]()
         //先从location.html文件中解析出省和市数据
         do {
             let str = try String(contentsOfFile: Bundle.main.path(forResource: "location", ofType: "html")!)
             //正则规则
-            let regex = "<h2><span class=\"mw-headline\"(.|\n)*?<ul>(.|\n)*?</ul>"
+            let regex =  "<h2><span class=\"mw-headline\"(.|\n)*?<ul>(.|\n)*?</ul>"
             let regular = try? NSRegularExpression(pattern: regex, options: NSRegularExpression.Options.caseInsensitive)
-            let arr = regular?.matches(in: str, options: [], range: NSRange(location: 0, length: str.characters.count))
-            for match in arr! {
+            let arr = regular?.matches(in: str, options: [], range: NSRange(location: 0, length: str.count))
+            for match in arr!{
                 //把string转成nsstring，利用oc的方法获取数据，比较方便
                 let range = match.range
                 let strns = str as NSString
                 let str = strns.substring(with: range)
                 //继续对str进行提取，得到省、市数据
-                if let province = regexCitys(str: str) {
+                if let province = regexCitys(str: str){
                     result.append(province)
                 }
                 
@@ -144,9 +128,8 @@ extension ViewController {
                 //            let endIndex = str.index(str.startIndex, offsetBy: range.location + range.length)
                 //            print("解析结果："+str[starIndex...endIndex])
             }
-            
-        } catch let err as NSError {
-            print(err.localizedFailureReason)
+        }catch let err as NSError{
+            print(err.localizedFailureReason!)
         }
         return result
     }
@@ -155,18 +138,18 @@ extension ViewController {
     func regexCitys(str: String) -> Province? {
         
         let provinceNameRegular = try? NSRegularExpression(pattern: "\">.*?</span><span", options: NSRegularExpression.Options.caseInsensitive)
-        let provinceNameRange = provinceNameRegular?.rangeOfFirstMatch(in: str, options: [], range: NSRange(location: 0, length: str.characters.count))
+        let provinceNameRange = provinceNameRegular?.rangeOfFirstMatch(in: str, options: [], range: NSRange(location: 0, length: str.count))
         var provinceName = (str as NSString).substring(with: provinceNameRange!)
-        provinceName = (provinceName as NSString).substring(with: NSRange(location: 2, length: provinceName.characters.count-2-12))
+        provinceName = (provinceName as NSString).substring(with: NSRange(location: 2, length: provinceName.count-2-12))
         print("城市名称：\(provinceName)")
         if provinceName == "注释和参考" {
             return nil
         }
-        var province = Province(name: provinceName, citys: [City]())
+        var province = Province(name: provinceName, cities: [City]())
         
         //解析城市
         let cityRegular = try? NSRegularExpression(pattern: "\">.*?</a>.*?</li>", options: NSRegularExpression.Options.caseInsensitive)
-        let arr = cityRegular?.matches(in: str, options: [], range: NSRange(location: 0, length: str.characters.count))
+        let arr = cityRegular?.matches(in: str, options: [], range: NSRange(location: 0, length: str.count))
         for match in arr! {
             let range = match.range
             let str: NSString = (str as NSString).substring(with: range) as NSString
@@ -186,7 +169,7 @@ extension ViewController {
             //经过分析，上海，富阳，青岛，信阳，武汉，广州，这几个城市别名会有区别，单独提出来处理
             switch cityName {
             case "上海":
-                cityAlias = (cityAlias as NSString).substring(with: NSRange(location: cityAlias.characters.count-6, length:6))
+                cityAlias = (cityAlias as NSString).substring(with: NSRange(location: cityAlias.count-6, length:6))
             case "富阳":
                 cityAlias = (cityAlias as NSString).substring(with: NSRange(location: 0, length:4))
             case "青岛":
@@ -194,17 +177,25 @@ extension ViewController {
             case "信阳":
                 cityAlias = (cityAlias as NSString).substring(with: NSRange(location: 0, length:10))
             case "武汉":
-                cityAlias = (cityAlias as NSString).substring(with: NSRange(location: cityAlias.characters.count-20, length:20))
+                cityAlias = (cityAlias as NSString).substring(with: NSRange(location: cityAlias.count-20, length:20))
             case "广州":
-                cityAlias = (cityAlias as NSString).substring(with: NSRange(location: cityAlias.characters.count-15, length:15))
+                cityAlias = (cityAlias as NSString).substring(with: NSRange(location: cityAlias.count-15, length:15))
             default:
                 break
             }
             print("经过修正：\(cityAlias)")
             let city = City(name: cityName, alias: cityAlias)
-            province.citys.append(city)
+            province.cities.append(city)
         }
         return province
     }
 }
+//市区结构体，包含名字和别称
+struct City {
+    let name, alias: String
+}
 
+struct Province {
+    let name: String
+    var cities: [City]
+}
