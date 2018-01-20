@@ -63,7 +63,7 @@ class ViewController: CustomSupVC {
     }
     
     
-    func changeNight(sender: UISwitch) {
+    @objc func changeNight(sender: UISwitch) {
         fadeAnimation()
         NightManager.sharedInstance.isNight = sender.isOn
         NotificationCenter.default.post(name: NSNotification.Name(NightChange), object: nil)

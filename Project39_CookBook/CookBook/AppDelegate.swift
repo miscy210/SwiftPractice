@@ -6,6 +6,7 @@
 //  Copyright © 2017年 YuHua. All rights reserved.
 //
 
+
 import UIKit
 
 @UIApplicationMain
@@ -15,11 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         window = UIWindow(frame: YHRect)
         window?.rootViewController = UINavigationController(rootViewController: MainVC())
         window?.makeKeyAndVisible()
-        
+        // Override point for customization after application launch.
         return true
     }
 

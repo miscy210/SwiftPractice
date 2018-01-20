@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  SpeechRecognition
+//  MultilevelMenu
 //
-//  Created by baiwei－mac on 17/1/4.
-//  Copyright © 2017年 YuHua. All rights reserved.
+//  Created by 苏一护 on 19/01/2018.
+//  Copyright © 2018 苏一护. All rights reserved.
 //
 
 import UIKit
@@ -15,11 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        window = UIWindow(frame: YHRect)
-        window?.rootViewController = ViewController()
-        window?.makeKeyAndVisible()
-        
+        // Override point for customization after application launch.
         return true
     }
 

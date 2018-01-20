@@ -88,7 +88,7 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
         
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         
-        guard let inputNode = audioEngine.inputNode else { fatalError("没有输入") }
+        let inputNode = audioEngine.inputNode
         guard let recognitionRequest = recognitionRequest else { fatalError("创建请求失败") }
         
         //一边解析一边反馈
@@ -126,6 +126,8 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
 
     func setupView() {
         
+        title = "Speech Recognition"
+        
         view.backgroundColor = .white
         textView.font = UIFont.systemFont(ofSize: 40)
         textView.isUserInteractionEnabled = false
@@ -141,7 +143,7 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
         view.addSubview(speek)
     }
     
-    func begin() {
+    @objc func begin() {
         do {
             try startRecording()
         } catch let err as NSError {
@@ -149,7 +151,7 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
         }
     }
     
-    func stop() {
+    @objc func stop() {
         audioEngine.stop()
         recognitionRequest?.endAudio()
     }

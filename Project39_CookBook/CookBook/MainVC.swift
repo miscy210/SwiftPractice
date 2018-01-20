@@ -9,60 +9,11 @@
 import UIKit
 import SideMenu
 
-
-struct ShowData {
-    var jianjie: String
-    var tags: String
-    var thumb_2: String
-    var views: NSInteger
-    var title: String
-    var thumb: String
-    var ID: NSInteger
-    var catename: String
-    var subcatename: String
-    var edittime: String
-    var menuTitle: String
-    
-    static func parseData(data: Any?) -> [ShowData]? {
-        if let data = data {
-            var result = [ShowData]()
-            let dic = data as! NSDictionary
-            let arr = dic["list"] as! NSArray
-            for content in arr {
-                let dic = content as! NSDictionary
-                let arr = dic["list"] as! NSArray
-                let title = dic["title"] as! String
-                for content in arr {
-                    let dic = content as! NSDictionary
-                    let menu = ShowData(jianjie: dic["jianjie"] as! String,
-                                        tags: dic["tags"] as! String,
-                                        thumb_2: dic["thumb_2"] as! String,
-                                        views: dic["views"]! as! NSInteger,
-                                        title: dic["title"] as! String,
-                                        thumb: dic["thumb"] as! String,
-                                        ID: dic["ID"]! as! NSInteger,
-                                        catename: dic["catename"] as! String,
-                                        subcatename: dic["subcatename"] as! String,
-                                        edittime: dic["edittime"] as! String,
-                                        menuTitle: title)
-                    result.append(menu)
-                }
-                return result
-            }
-        }
-        return nil
-    }
-}
-
-
 class MainVC: UIViewController {
-    
-    
     let tableView = UITableView(frame: YHNoNavRect, style: .plain)
-    let reuseIdentifer = "MainCell"
+    let reuseIdentifier = "MainCell"
     var datas = [ShowData]()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         NetManager.share.mainData(url: mainURL)
@@ -70,10 +21,9 @@ class MainVC: UIViewController {
         configSideMenu()
         setupView()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -83,7 +33,7 @@ class MainVC: UIViewController {
     func setupView() {
         title = "菜谱"
         view.backgroundColor = .white
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(showSideMunu))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(showSideMenu))
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.setBackgroundImage(UIImage(named: "bgimg"), for: .topAttached, barMetrics: .default)
         navigationController?.navigationBar.barStyle = .black//如果有导航栏，需要设置状态栏颜色，需要通过该方法实现
@@ -91,30 +41,29 @@ class MainVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-        tableView.register(MainCustomCell.self, forCellReuseIdentifier: reuseIdentifer)
+        tableView.register(MainCustomCell.self, forCellReuseIdentifier: reuseIdentifier)
         view.addSubview(tableView)
     }
     
-    func showSideMunu() {
-        present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
+    @objc func showSideMenu() {
+        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
     
     func configSideMenu() {
         let menu = UISideMenuNavigationController(rootViewController: ViewController())
         menu.leftSide = true
-        SideMenuManager.menuLeftNavigationController = menu
-        SideMenuManager.menuFadeStatusBar = false
-        SideMenuManager.menuPresentMode = .viewSlideInOut
-        SideMenuManager.menuAnimationFadeStrength = 0.5//隐藏度
-        SideMenuManager.menuShadowOpacity = 0.5//阴影透明度
-        SideMenuManager.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
+        SideMenuManager.default.menuLeftNavigationController = menu
+        SideMenuManager.default.menuFadeStatusBar = false
+        SideMenuManager.default.menuPresentMode = .viewSlideOut
+        SideMenuManager.default.menuAnimationFadeStrength = 0.5//隐藏度
+        SideMenuManager.default.menuShadowOpacity = 0.5//阴影透明度
+        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
     }
-
+    
 }
 
-
-extension MainVC:UITableViewDataSource, UITableViewDelegate, NetDelegate {
+extension MainVC: UITableViewDataSource, UITableViewDelegate, NetDelegate {
     
     //MARK: - DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -126,11 +75,10 @@ extension MainVC:UITableViewDataSource, UITableViewDelegate, NetDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! MainCustomCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MainCustomCell
         cell.buildUI(data: datas[indexPath.row])
         return cell
     }
-    
     
     //MARK: - Delegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -145,8 +93,6 @@ extension MainVC:UITableViewDataSource, UITableViewDelegate, NetDelegate {
         show.title = data.title
         navigationController?.pushViewController(show, animated: true)
     }
-    
-    
     //MARK: - NetDelegate
     func dataDownload<DATA>(datas: [DATA]?, type: DataType) {
         guard let datas = datas, type == DataType.MainData else {
@@ -165,14 +111,11 @@ extension MainVC:UITableViewDataSource, UITableViewDelegate, NetDelegate {
     }
 }
 
-
-
 class MainCustomCell: UITableViewCell {
-    
     let title = UILabel()
     let detail = UILabel()
     let showImage = UIImageView()
-
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         showImage.frame = CGRect(x: 10, y: 10, width: 60, height: 60)
@@ -201,5 +144,6 @@ class MainCustomCell: UITableViewCell {
     }
     
 }
+
 
 

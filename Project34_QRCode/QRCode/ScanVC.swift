@@ -113,7 +113,7 @@ class ScanVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                                           AVMetadataObjectTypeEAN8Code,
                                           AVMetadataObjectTypeCode128Code]
         } catch let err as NSError {
-            print("发生错误：\(err.localizedFailureReason)")
+            print("发生错误：\(String(describing: err.localizedFailureReason))")
         }
     }
     

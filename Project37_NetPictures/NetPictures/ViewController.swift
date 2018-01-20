@@ -102,7 +102,7 @@ class ViewController: UIViewController {
         HUDManager.hudShow(title: "正在更新", detail: "请稍后...")
         NetManager.postPage(page: page) { (result, error) in
             if error != nil {
-                print("错误：\(error)")
+                print("错误：\(String(describing: error))")
                 OperationQueue.main.addOperation {
                     HUDManager.removeShow()
                     self.tableView.mj_footer.endRefreshing()

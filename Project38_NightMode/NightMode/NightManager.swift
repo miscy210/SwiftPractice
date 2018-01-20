@@ -56,7 +56,7 @@ class CustomSupVC: UIViewController {
         return NightManager.sharedInstance.isNight ? .lightContent : .default
     }
     
-    func setViewColor() {
+    @objc func setViewColor() {
         print("注意：子类没有实现该方法！会导致夜间模式颜色不正确！")
     }
 }
